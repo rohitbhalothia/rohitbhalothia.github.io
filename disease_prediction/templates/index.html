@@ -1,0 +1,266 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction System</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background:#111;
+            color:white;
+            padding:30px;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:40px;
+            font-size:40px;
+            color:#00d4ff;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+            gap:30px;
+        }
+
+        .card{
+            background:#1b1b1b;
+            padding:25px;
+            border-radius:20px;
+            box-shadow:0 0 15px rgba(0,0,0,0.5);
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+        }
+
+        .label{
+            font-size:18px;
+            margin-bottom:10px;
+            color:#ccc;
+            text-transform:uppercase;
+        }
+
+        .value{
+            font-size:42px;
+            font-weight:bold;
+            color:#00d4ff;
+        }
+
+        .unit{
+            font-size:20px;
+            color:#aaa;
+        }
+
+        input[type="range"]{
+            width:100%;
+            margin-top:15px;
+            accent-color:#00d4ff;
+        }
+
+        .desc{
+            margin-top:10px;
+            color:#888;
+            font-size:16px;
+        }
+
+        .btn{
+            margin-top:40px;
+            width:100%;
+            padding:18px;
+            border:none;
+            border-radius:15px;
+            background:#00d4ff;
+            color:black;
+            font-size:22px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .btn:hover{
+            background:#00aacc;
+        }
+
+        .result{
+            margin-top:30px;
+            text-align:center;
+            font-size:30px;
+            color:#00ff88;
+            font-weight:bold;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>DIABETES PREDICTION SYSTEM</h1>
+
+    <form action="/predict" method="post">
+
+        <div class="grid">
+
+            <!-- Glucose -->
+            <div class="card">
+                <div class="label">Glucose Level</div>
+                <div>
+                    <span class="value" id="glucoseValue">120</span>
+                    <span class="unit">mg/dL</span>
+                </div>
+
+                <input type="range" min="50" max="250" value="120"
+                name="glucose" id="glucose"
+                oninput="glucoseValue.innerText=this.value">
+
+                <div class="desc">Normal: 70–99 mg/dL</div>
+            </div>
+
+            <!-- BMI -->
+            <div class="card">
+                <div class="label">BMI</div>
+
+                <div>
+                    <span class="value" id="bmiValue">28</span>
+                    <span class="unit">kg/m²</span>
+                </div>
+
+                <input type="range" min="10" max="50" value="28"
+                name="bmi" id="bmi"
+                oninput="bmiValue.innerText=this.value">
+
+                <div class="desc">Healthy: 18.5–24.9</div>
+            </div>
+
+            <!-- Age -->
+            <div class="card">
+                <div class="label">Age</div>
+
+                <div>
+                    <span class="value" id="ageValue">30</span>
+                    <span class="unit">years</span>
+                </div>
+
+                <input type="range" min="1" max="100" value="30"
+                name="age" id="age"
+                oninput="ageValue.innerText=this.value">
+
+                <div class="desc">Risk increases after 40</div>
+            </div>
+
+            <!-- Blood Pressure -->
+            <div class="card">
+                <div class="label">Blood Pressure</div>
+
+                <div>
+                    <span class="value" id="bpValue">72</span>
+                    <span class="unit">mm Hg</span>
+                </div>
+
+                <input type="range" min="40" max="180" value="72"
+                name="bloodpressure" id="bloodpressure"
+                oninput="bpValue.innerText=this.value">
+
+                <div class="desc">Normal: 60–80 mm Hg</div>
+            </div>
+
+            <!-- Insulin -->
+            <div class="card">
+                <div class="label">Insulin</div>
+
+                <div>
+                    <span class="value" id="insulinValue">80</span>
+                    <span class="unit">μU/mL</span>
+                </div>
+
+                <input type="range" min="0" max="300" value="80"
+                name="insulin" id="insulin"
+                oninput="insulinValue.innerText=this.value">
+
+                <div class="desc">Normal: 16–166 μU/mL</div>
+            </div>
+
+            <!-- Skin Thickness -->
+            <div class="card">
+                <div class="label">Skin Thickness</div>
+
+                <div>
+                    <span class="value" id="skinValue">20</span>
+                    <span class="unit">mm</span>
+                </div>
+
+                <input type="range" min="0" max="100" value="20"
+                name="skinthickness" id="skinthickness"
+                oninput="skinValue.innerText=this.value">
+
+                <div class="desc">Triceps skinfold</div>
+            </div>
+
+            <!-- Pregnancies -->
+            <div class="card">
+                <div class="label">Pregnancies</div>
+
+                <div>
+                    <span class="value" id="pregValue">2</span>
+                    <span class="unit">times</span>
+                </div>
+
+                <input type="range" min="0" max="20" value="2"
+                name="pregnancies" id="pregnancies"
+                oninput="pregValue.innerText=this.value">
+
+                <div class="desc">Number of pregnancies</div>
+            </div>
+
+            <!-- Diabetes Pedigree -->
+            <div class="card">
+                <div class="label">Diabetes Pedigree</div>
+
+                <div>
+                    <span class="value" id="dpfValue">0.47</span>
+                    <span class="unit">score</span>
+                </div>
+
+                <input type="range" min="0" max="3" step="0.01" value="0.47"
+                name="dpf" id="dpf"
+                oninput="dpfValue.innerText=this.value">
+
+                <div class="desc">Family history score</div>
+            </div>
+
+        </div>
+
+        <button class="btn" type="submit">
+            Predict Diabetes Risk
+        </button>
+
+    </form>
+
+    <div class="result">
+        {{ prediction_text }}
+    </div>
+
+</div>
+
+</body>
+</html>
+```
