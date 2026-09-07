@@ -107,3 +107,15 @@ footer a { color: var(--accent); }
   .cgpa { border-left: 0; border-top: 1px solid var(--line); padding: 20px 0 0; width: 100%; text-align: left; }
   footer { flex-direction: column; gap: 10px; }
 }
+.project-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.project-link:hover {
+  opacity: 0.7;
+}
